@@ -40,7 +40,13 @@ class BurgerBuilder extends Component {
 
 
     purchaseHandler = () => {
-        this.setState({purchasing:true});
+        if (this.props.isAuthenticated) {
+            this.setState({purchasing:true});
+        }else {
+            this.props.onSetAuthRedirectPath('/checkout');
+            this.props.history.push('/auth');
+        }
+        
     }
 
     purchaseCancelHandler = () => {
@@ -74,12 +80,13 @@ class BurgerBuilder extends Component {
 
 
             <BuildControls 
-            ingredientAdded={this.props.onIngredientAdded}  
-            ingredientRemoved={this.props.onIngredientRemoved}
-            disabledInfo={disabledInfo}
-            purchasable={this.updatePurchaseState(this.props.ings)}
-            ordered={this.purchaseHandler}
-            price={this.props.price}/>
+                    ingredientAdded={this.props.onIngredientAdded}  
+                    ingredientRemoved={this.props.onIngredientRemoved}
+                    disabledInfo={disabledInfo}
+                    purchasable={this.updatePurchaseState(this.props.ings)}
+                    ordered={this.purchaseHandler}
+                    isAuth={this.props.isAuthenticated}
+                    price={this.props.price}/>
             </Aux>
             );
 
@@ -107,6 +114,7 @@ const mapStateToProps = state => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         error: state.burgerBuilder.error,
+        isAuthenticated: state.auth.token !== null
 
     };
 }
@@ -116,7 +124,8 @@ const mapDispatchToProps = dispatch => {
         onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
         onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
         onInitIngredients: () => dispatch(actions.initIngredients()),
-        onInitPurchase: () => dispatch(actions.purchaseInit())
+        onInitPurchase: () => dispatch(actions.purchaseInit()),
+        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     }
 }
 

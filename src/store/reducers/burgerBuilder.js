@@ -1,11 +1,12 @@
 import * as actionTypes from '../actions/actionsTypes';
 import { updatedObject } from '../utility';
-import { setIngredients } from '../actions/burgerBuilder';
+// import { setIngredients } from '../actions/burgerBuilder';
 
 const initialState = {
     ingredients: null,
     totalPrice: 4,
-    error: false
+    error: false,
+    building: false
 };
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -20,7 +21,8 @@ const addIngredient = (state, action) => {
     const updatedIngredients =  updatedObject(state.ingredients,updatedIngredient);
     const updatedState = { 
         ingredients: updatedIngredients,
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        building: true
     }
     return  updatedObject(state, updatedState);
 
@@ -31,13 +33,14 @@ const removeIngredient = (state, action) => {
     const updatedIngs =  updatedObject(state.ingredients,updatedIng);
     const updatedSt = { 
         ingredients: updatedIngs,
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        building: true
     }
     return  updatedObject(state, updatedSt);
 
 }
 
-const SET_INGREDIENTS = (state, action) => {
+const setIngredients = (state, action) => {
     return updatedObject(state, {
         ingredients: { 
             salad: action.ingredients.salad,
@@ -47,8 +50,8 @@ const SET_INGREDIENTS = (state, action) => {
         },
         totalPrice: 4,
         error: false,
+        building: false
     });
-
 }
 const fetchIngredientsFailed = (state, action ) => {
     return updatedObject(state, {error: true})
