@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 
 
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
 
         // constructor(props) {
     //     super(props) {

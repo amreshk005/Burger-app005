@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionsTypes';
-import { updatedObject } from '../utility';
+import { updatedObject } from '../../shared/utility';
 
 
 
@@ -14,7 +14,7 @@ const purchaseInit = (state, action ) => {
 }
 
 const purchaseBurgerStart = (state, action) => {
-    return updatedObject( state, {loading: false});
+    return updatedObject( state, {loading: true});
 }
 
 const purchaseBugerSuccess = (state, action) => {

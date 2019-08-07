@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionsTypes';
-import { updatedObject } from '../utility';
+import { updatedObject } from '../../shared/utility';
 // import { stat } from 'fs';
 
 const initialState = {
